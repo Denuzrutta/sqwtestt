@@ -2,6 +2,15 @@
 -- 	Disabled = not Functions.CheckCompatability({"require"}), DisabledTooltip = Globals.IncompatibleMessage
 -- 	Risky = Floor ~= "Mines" (Means it only works on mines)
 
+local __index
+__index = hookmetamethod(game, "__namecall", newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+    if self == game.Players.LocalPlayer and method == "Kick" then
+        print("Перехвачена попытка кика!")
+        return
+    end
+    return __index(self, ...)
+end))
 print("Скрипт запущен")
 local LoadStart = tick()
 
